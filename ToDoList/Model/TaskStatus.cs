@@ -1,6 +1,6 @@
 ﻿namespace ToDoList.Model
 {
-    internal enum TaskStatus
+    public enum TaskStatus
     {
         Pending,
         Incomplete,
