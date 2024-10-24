@@ -5,7 +5,6 @@ public partial class TaskView : ContentView
 	public TaskView()
 	{
 		InitializeComponent();
-        BindingContext = this;
 	}
 
     public static readonly BindableProperty Label =
