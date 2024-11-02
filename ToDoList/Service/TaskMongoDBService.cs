@@ -6,7 +6,7 @@ using ToDoList.Model;
 
 namespace ToDoList.Service;
 
-internal class TaskMongoDBService
+internal class TaskMongoDBService : ITaskService
 {
     private string _connectionString;
     private string _databaseName = "Tasks";
@@ -31,9 +31,9 @@ internal class TaskMongoDBService
 
     }
 
-    public async Task<IEnumerable<TaskModel>> GetTasksCollection(Func<TaskModel, bool> x) 
+    public async Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Func<TaskModel, bool> x) 
     {
-        var tasksCursor = await _taskCollection.FindAsync(_ => true);
+        var tasksCursor = await _taskCollection.FindAsync(tsk => x(tsk));
         return tasksCursor.ToList();
     }
 
