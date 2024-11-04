@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using ToDoList.Model;
 
 namespace ToDoList.Service
 {
     internal interface ITaskService
     {
-        public Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Func<TaskModel, bool> x);
+        public Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Expression<Func<TaskModel, bool>> x);
+
+        public Task InsertTaskAsync(TaskModel task);
     }
 }

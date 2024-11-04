@@ -1,6 +1,7 @@
 ﻿
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Linq.Expressions;
 using System.Xml.Linq;
 using ToDoList.Model;
 
@@ -31,10 +32,15 @@ internal class TaskMongoDBService : ITaskService
 
     }
 
-    public async Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Func<TaskModel, bool> x) 
+    public async Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Expression<Func<TaskModel, bool>> x) 
     {
-        var tasksCursor = await _taskCollection.FindAsync(tsk => x(tsk));
+        var tasksCursor = await _taskCollection.FindAsync(x);
         return tasksCursor.ToList();
+    }
+
+    public async Task InsertTaskAsync(TaskModel task)
+    {
+        await _taskCollection.InsertOneAsync(task);
     }
 
     //I really see no point in FactoryMethod for 

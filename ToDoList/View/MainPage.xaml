@@ -5,17 +5,17 @@
              xmlns:cv="clr-namespace:ToDoList.ContetnView"
              x:Class="ToDoList.MainPage">
 
-    <ScrollView>
-        <Grid RowDefinitions="0.3*, *">
-            <cv:TaskView LabelText="heyy?"/>
-            <CollectionView ItemsSource="{Binding TasksCollection}" Grid.Row="1">
+
+    <Grid RowDefinitions="0.3*, *">
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding TasksCollection}" Grid.Row="1" BackgroundColor="Red">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <cv:TaskView LabelText="Hey" BackgroundColor="Aqua"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </Grid>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>
