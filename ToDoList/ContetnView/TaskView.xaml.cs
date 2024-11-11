@@ -7,21 +7,21 @@ public partial class TaskView : ContentView
 		InitializeComponent();
 	}
 
-    public static readonly BindableProperty Label =
-    BindableProperty.Create(nameof(LabelText), typeof(string), typeof(TaskView), default(string));
+    public static readonly BindableProperty LabelProperty =
+    BindableProperty.Create(nameof(Label), typeof(string), typeof(TaskView), default(string));
 
-    public static readonly BindableProperty IsComplete =
-    BindableProperty.Create(nameof(TaskStatus), typeof(bool), typeof(TaskView), default(bool));
+    public static readonly BindableProperty IsCompleteProperty =
+    BindableProperty.Create(nameof(IsComplete), typeof(bool), typeof(TaskView), default(bool));
 
-    public string LabelText
+    public string Label
     {
-        get => (string)GetValue(Label);
-        set => SetValue(Label, value);
+        get => (string)GetValue(LabelProperty);
+        set => SetValue(LabelProperty, value);
     }
 
-    public Model.TaskStatus TaskStatus
+    public Model.TaskStatus IsComplete
     {
-        get => (bool)GetValue(IsComplete) ? Model.TaskStatus.Done : Model.TaskStatus.Pending;
-        set => SetValue(IsComplete, value == Model.TaskStatus.Done);
+        get => (bool)GetValue(IsCompleteProperty) ? Model.TaskStatus.Done : Model.TaskStatus.Pending;
+        set => SetValue(IsCompleteProperty, value == Model.TaskStatus.Done);
     }
 }

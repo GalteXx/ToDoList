@@ -6,12 +6,14 @@
              x:Class="ToDoList.MainPage">
 
 
-    <Grid RowDefinitions="0.3*, *">
-        <ScrollView>
-            <CollectionView ItemsSource="{Binding TasksCollection}" Grid.Row="1" BackgroundColor="Red">
+    <Grid RowDefinitions="0.05*, *" ColumnDefinitions="*, .3*">
+        <Entry x:Name="SearchEntry" Placeholder="Search Input"/>
+        <Button Text="Search" Grid.Column="1" Command="{Binding SearchTaskCommand}" CommandParameter="{Binding Source={x:Reference SearchEntry}, Path= Text}"/>
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
+            <CollectionView ItemsSource="{Binding TasksCollection}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <cv:TaskView LabelText="Hey" BackgroundColor="Aqua"/>
+                        <cv:TaskView Label="{Binding Name}"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
