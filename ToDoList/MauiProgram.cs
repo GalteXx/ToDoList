@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using ToDoList.Service;
+using ToDoList.ViewModel;
 
 namespace ToDoList
 {
@@ -17,8 +19,10 @@ namespace ToDoList
 
 #if DEBUG
     		builder.Logging.AddDebug();
+            builder.Services.AddSingleton<ServiceFactory>();
+            builder.Services.AddTransient<TaskPageViewModel>();
+            builder.Services.AddTransient<MainPage>();
 #endif
-
             return builder.Build();
         }
     }

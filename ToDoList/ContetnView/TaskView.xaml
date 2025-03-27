@@ -10,7 +10,7 @@
     </ContentView.Resources>
     <Grid ColumnDefinitions=".1*, *" Margin="20, 0, 0, 0">
         <CheckBox x:Name="StatusBox" IsChecked="{Binding IsComplete, Source={RelativeSource AncestorType={x:Type local:TaskView}}, Converter={StaticResource StatusToBool}}"/>
-        <Label Text="{Binding LabelText, Source={RelativeSource AncestorType={x:Type local:TaskView}}}"
+        <Label Text="{Binding BindedTaskModel.Name, Source={RelativeSource AncestorType={x:Type local:TaskView}}}"
                Grid.Column="1" VerticalTextAlignment="Center"
                TextDecorations="{Binding Source={x:Reference StatusBox}, Path=IsChecked, Converter={StaticResource BoolToTextDecoration}}"
                />

@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-	<Server connectionString="mongodb://127.0.0.1:27017"/>
+	<Server connectionString="mongodb://192.168.240.1:27017"/>
 </Configuration>

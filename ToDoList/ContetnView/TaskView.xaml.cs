@@ -1,3 +1,5 @@
+using ToDoList.Model;
+
 namespace ToDoList.ContetnView;
 
 public partial class TaskView : ContentView
@@ -12,6 +14,15 @@ public partial class TaskView : ContentView
 
     public static readonly BindableProperty IsCompleteProperty =
     BindableProperty.Create(nameof(IsComplete), typeof(bool), typeof(TaskView), default(bool));
+
+    public static readonly BindableProperty BindedTaskModelProperty = 
+    BindableProperty.Create(nameof(BindedTaskModel), typeof(TaskModel), typeof(TaskView), default(TaskModel));
+
+    internal TaskModel BindedTaskModel
+    {
+        get => (TaskModel)GetValue(BindedTaskModelProperty);
+        set => SetValue(BindedTaskModelProperty, value);
+    }
 
     public string Label
     {

@@ -15,11 +15,21 @@ namespace ToDoList.ViewModel
 
         public ICommand AddTaskCommand => new Command<string>(async (taskName) => await OnAddTask(taskName));
         public ICommand SearchTaskCommand => new Command<string>(async (filter) => await OnSearchTask(filter));       
-        public TaskPageViewModel()
+        public TaskPageViewModel() { }
+
+        public static async Task<TaskPageViewModel> CreateAsync(ServiceFactory serviceFactory)
         {
-            _service = new TaskMongoDBService();
+            var vm = new TaskPageViewModel();
+            await vm.InitalizeAsync(serviceFactory);
+            return vm;
+        }
+
+        private async Task InitalizeAsync(ServiceFactory serviceFactory)
+        {
+            _service = await serviceFactory.GetOrCreateService();
             TasksCollection = [];
-            Task.Run(() => GetTasksFromService(_ => true));
+            await _service.Initialization;
+            await GetTasksFromService(_ => true);
         }
 
         private async Task GetTasksFromService(Expression<Func<TaskModel, bool> >x)
@@ -27,10 +37,7 @@ namespace ToDoList.ViewModel
             var tasks = await _service.GetTasksCollectionAsync(x);
 
             //should probably supress the notifications and add all tasks in bulk.... meh, whatever
-            for (int i = 0; i < TasksCollection.Count; i++)
-            {
-                TasksCollection.RemoveAt(0);
-            }
+            TasksCollection.Clear();
             foreach (var taskModel in tasks)
             {
                 
@@ -47,7 +54,7 @@ namespace ToDoList.ViewModel
 
         private async Task OnSearchTask(string filter)
         {
-            await GetTasksFromService(task => task.Name.ToLower().Contains(filter.ToLower()));
+            await GetTasksFromService(task => task.Name.Contains(filter, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

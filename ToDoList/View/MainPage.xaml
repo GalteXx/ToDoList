@@ -6,18 +6,22 @@
              x:Class="ToDoList.MainPage">
 
 
-    <Grid RowDefinitions="0.05*, *" ColumnDefinitions="*, .3*">
+    <Grid RowDefinitions="0.05*, *, 0.1*" ColumnDefinitions="*, .3*">
         <Entry x:Name="SearchEntry" Placeholder="Search Input"/>
         <Button Text="Search" Grid.Column="1" Command="{Binding SearchTaskCommand}" CommandParameter="{Binding Source={x:Reference SearchEntry}, Path= Text}"/>
         <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
             <CollectionView ItemsSource="{Binding TasksCollection}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <cv:TaskView Label="{Binding Name}"/>
+                        <Grid RowDefinitions="*,*">
+                            <cv:TaskView Label="{Binding Name}" BindedTaskModel="{Binding .}"/>
+                            <Label Grid.Row="1" Text="{Binding Name}"/>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="Add Task" Clicked="Button_Clicked"/>
     </Grid>
 
 </ContentPage>

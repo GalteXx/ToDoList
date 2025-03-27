@@ -2,21 +2,21 @@
 
 namespace ToDoList.Model
 {
-    internal class TaskModel
+    public class TaskModel
     {
-        private TaskStatus _status;
-        private string _name;
-
         public TaskModel(string name)
         {
-            _name = name;
+            Name = name;
             Id = "";
         }
 
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
-        public string Name { get => _name; }
-        public TaskStatus Status { get => _status; }
+
+        [BsonElement("name")]
+        public string Name { get; private set; }
+        [BsonElement("status")]
+        public TaskStatus Status { get; set; }
     }
 }
