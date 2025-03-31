@@ -16,7 +16,7 @@ namespace ToDoList
             BindingContext = await TaskPageViewModel.CreateAsync(serviceFactory);
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void AddTaskButton_Clicked(object sender, EventArgs e)
         {
 
         }

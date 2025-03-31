@@ -10,5 +10,7 @@ namespace ToDoList.Service
         public Task<IEnumerable<TaskModel>> GetTasksCollectionAsync(Expression<Func<TaskModel, bool>> x);
 
         public Task InsertTaskAsync(TaskModel task);
+
+        public Task RemoveTaskAsync(TaskModel task);
     }
 }

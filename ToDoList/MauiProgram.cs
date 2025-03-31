@@ -17,11 +17,12 @@ namespace ToDoList
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
             builder.Services.AddSingleton<ServiceFactory>();
             builder.Services.AddTransient<TaskPageViewModel>();
             builder.Services.AddTransient<MainPage>();
+
+#if DEBUG
+            builder.Logging.AddDebug();
 #endif
             return builder.Build();
         }

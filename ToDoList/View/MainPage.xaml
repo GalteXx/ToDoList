@@ -3,25 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ToDoList.ViewModel"
              xmlns:cv="clr-namespace:ToDoList.ContetnView"
-             x:Class="ToDoList.MainPage">
+             x:Class="ToDoList.MainPage" x:Name="mainPage">
 
 
     <Grid RowDefinitions="0.05*, *, 0.1*" ColumnDefinitions="*, .3*">
         <Entry x:Name="SearchEntry" Placeholder="Search Input"/>
-        <Button Text="Search" Grid.Column="1" Command="{Binding SearchTaskCommand}" CommandParameter="{Binding Source={x:Reference SearchEntry}, Path= Text}"/>
+        <Button Text="Search" Grid.Column="1" 
+                Command="{Binding SearchTaskCommand}" 
+                CommandParameter="{Binding Source={x:Reference SearchEntry}, Path= Text}"/>
+        
         <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
             <CollectionView ItemsSource="{Binding TasksCollection}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="*,*">
-                            <cv:TaskView Label="{Binding Name}" BindedTaskModel="{Binding .}"/>
-                            <Label Grid.Row="1" Text="{Binding Name}"/>
+                            <cv:TaskView Label="{Binding Name}" 
+                                         RemoveCommand="{Binding Source={x:Reference mainPage}, Path=BindingContext.RemoveTaskCommand}"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="Add Task" Clicked="Button_Clicked"/>
+        
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="Add Task" 
+                Command="{Binding AddTaskButtonCommand}" 
+                CommandParameter="{x:Reference Name=mainPage}"/>
     </Grid>
 
 </ContentPage>

@@ -8,11 +8,22 @@
         <converters:StatusToBoolConverter x:Key="StatusToBool" />
         <converters:BoolToTextDecorationConverter x:Key="BoolToTextDecoration" />
     </ContentView.Resources>
-    <Grid ColumnDefinitions=".1*, *" Margin="20, 0, 0, 0">
-        <CheckBox x:Name="StatusBox" IsChecked="{Binding IsComplete, Source={RelativeSource AncestorType={x:Type local:TaskView}}, Converter={StaticResource StatusToBool}}"/>
-        <Label Text="{Binding BindedTaskModel.Name, Source={RelativeSource AncestorType={x:Type local:TaskView}}}"
-               Grid.Column="1" VerticalTextAlignment="Center"
-               TextDecorations="{Binding Source={x:Reference StatusBox}, Path=IsChecked, Converter={StaticResource BoolToTextDecoration}}"
-               />
-    </Grid>
+
+    <SwipeView>
+        <SwipeView.LeftItems>
+            <SwipeItems>
+                <SwipeItem Text="Remove"
+                       BackgroundColor="DarkRed"
+                       Command="{Binding RemoveCommand, Source={RelativeSource AncestorType={x:Type local:TaskView}}}"
+                       CommandParameter="{Binding .}"/>
+            </SwipeItems>
+        </SwipeView.LeftItems>
+        <Grid ColumnDefinitions=".1*, *" Margin="20, 0, 0, 0">
+            <CheckBox x:Name="StatusBox" IsChecked="{Binding IsComplete, Source={RelativeSource AncestorType={x:Type local:TaskView}}, Converter={StaticResource StatusToBool}}"/>
+            <Label Text="{Binding Label, Source={RelativeSource AncestorType={x:Type local:TaskView}}}"
+                   Grid.Column="1" VerticalTextAlignment="Center"
+                   TextDecorations="{Binding Source={x:Reference StatusBox}, Path=IsChecked, Converter={StaticResource BoolToTextDecoration}}"
+                   />
+        </Grid>
+    </SwipeView>
 </ContentView>

@@ -41,5 +41,10 @@ internal class TaskMongoDBService : ITaskService
     {
         await _taskCollection.InsertOneAsync(task);
     }
+
+    public async Task RemoveTaskAsync(TaskModel task)
+    {
+        await _taskCollection.DeleteOneAsync(tsk => tsk == task);
+    }
 }
 
