@@ -12,5 +12,7 @@ namespace ToDoList.Service
         public Task InsertTaskAsync(TaskModel task);
 
         public Task RemoveTaskAsync(TaskModel task);
+
+        public Task UpdateTaskAsync(TaskModel task);
     }
 }

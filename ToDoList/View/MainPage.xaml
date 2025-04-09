@@ -3,31 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ToDoList.ViewModel"
              xmlns:cv="clr-namespace:ToDoList.ContetnView"
-             x:Class="ToDoList.MainPage" x:Name="mainPage">
+             x:Class="ToDoList.MainPage" x:Name="mainPage" Shell.NavBarIsVisible="False">
 
 
-    <Grid RowDefinitions="0.05*, *, 0.1*" ColumnDefinitions="*, .3*">
-        <Entry x:Name="SearchEntry" Placeholder="Search Input"/>
-        <Button Text="Search" Grid.Column="1" 
-                Command="{Binding SearchTaskCommand}" 
-                CommandParameter="{Binding Source={x:Reference SearchEntry}, Path= Text}"/>
+    <Grid RowDefinitions="0.07*, *" Padding="10">
+        <Border>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="30"/>
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*, .3*">
+                <Entry x:Name="SearchEntry" Placeholder="Search Input" 
+                       ReturnCommand="{Binding SearchTaskCommand}"
+                       ReturnCommandParameter="{Binding Source={x:Reference SearchEntry}, Path=Text}"
+                       Margin="10, 0, 10, 5" VerticalOptions="End"/>
+                <Button Text="Search" Grid.Column="1" CornerRadius="30"
+                    Command="{Binding SearchTaskCommand}" 
+                    CommandParameter="{Binding Source={x:Reference SearchEntry}, Path=Text}"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Margin="0,5,0,0">
+            <Grid RowDefinitions="*, 0.1*">
+                <ScrollView>
+                    <CollectionView ItemsSource="{Binding TasksCollection}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <cv:TaskView Label="{Binding Name}" TaskStatus="{Binding Status, Mode=TwoWay}"
+                                                 RemoveCommand="{Binding Source={x:Reference mainPage}, Path=BindingContext.RemoveTaskCommand}"
+                                                 StatusUpdateCommand="{Binding Source={x:Reference mainPage}, Path=BindingContext.UpdateTaskCommand}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+
+                <Button Grid.Row="1" Grid.ColumnSpan="2" Text="Add Task" 
+                        Command="{Binding AddTaskButtonCommand}"
+                        CommandParameter="{x:Reference Name=mainPage}" Margin="10"/>
+            </Grid>
+        </Border>
         
-        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
-            <CollectionView ItemsSource="{Binding TasksCollection}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid RowDefinitions="*,*">
-                            <cv:TaskView Label="{Binding Name}" 
-                                         RemoveCommand="{Binding Source={x:Reference mainPage}, Path=BindingContext.RemoveTaskCommand}"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
-        
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="Add Task" 
-                Command="{Binding AddTaskButtonCommand}" 
-                CommandParameter="{x:Reference Name=mainPage}"/>
     </Grid>
 
 </ContentPage>

@@ -17,6 +17,7 @@ namespace ToDoList.Model
         [BsonElement("name")]
         public string Name { get; private set; }
         [BsonElement("status")]
-        public TaskStatus Status { get; set; }
+        public TaskStatus Status { get; 
+            set; }
     }
 }

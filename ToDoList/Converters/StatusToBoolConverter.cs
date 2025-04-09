@@ -6,12 +6,15 @@ namespace ToDoList.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value != null && (Model.TaskStatus)value == Model.TaskStatus.Done ? TextDecorations.Strikethrough : TextDecorations.None;
+            return value != null && (Model.TaskStatus)value == Model.TaskStatus.Done;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value == null || !(bool)value)
+                return Model.TaskStatus.Pending;
+
+            return Model.TaskStatus.Done;
         }
     }
 }

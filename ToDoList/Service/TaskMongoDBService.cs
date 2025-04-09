@@ -46,5 +46,11 @@ internal class TaskMongoDBService : ITaskService
     {
         await _taskCollection.DeleteOneAsync(tsk => tsk == task);
     }
+
+    public async Task UpdateTaskAsync(TaskModel task)
+    {
+        //I should use Update instead of replacing. Oh well...
+        await _taskCollection.ReplaceOneAsync(tsk => tsk.Id == task.Id, task);
+    }
 }
 

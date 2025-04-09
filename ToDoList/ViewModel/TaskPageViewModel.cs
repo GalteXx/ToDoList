@@ -18,6 +18,7 @@ namespace ToDoList.ViewModel
         public ICommand SearchTaskCommand => new Command<string>(async (filter) => await OnSearchTask(filter));
         public ICommand AddTaskButtonCommand => new Command<Page>(async (page) => await OnAddNewTask(page));
         public ICommand RemoveTaskCommand => new Command<TaskModel>(async (task) => await OnRemoveTask(task));
+        public ICommand UpdateTaskCommand => new Command<TaskModel>(async (task) => await OnUpdateTask(task));
         public TaskPageViewModel() { }
 
 
@@ -64,6 +65,11 @@ namespace ToDoList.ViewModel
             //Not the best practice. Oh well...
             TasksCollection.Add(task);
             await _service.InsertTaskAsync(task);
+        }
+
+        private async Task OnUpdateTask(TaskModel task)
+        {
+            await _service.UpdateTaskAsync(task);
         }
 
         private async Task OnAddNewTask(Page mainPage)

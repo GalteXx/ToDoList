@@ -13,10 +13,13 @@ public partial class TaskView : ContentView
     public static readonly BindableProperty LabelProperty =
     BindableProperty.Create(nameof(Label), typeof(string), typeof(TaskView), default(string));
 
-    public static readonly BindableProperty IsCompleteProperty =
-    BindableProperty.Create(nameof(IsComplete), typeof(bool), typeof(TaskView), default(bool));
+    public static readonly BindableProperty TaskStatusProperty =
+    BindableProperty.Create(nameof(TaskStatus), typeof(Model.TaskStatus), typeof(TaskView), default(Model.TaskStatus));
 
     public static readonly BindableProperty RemoveCommandProperty =
+    BindableProperty.Create(nameof(ICommand), typeof(ICommand), typeof(TaskView), null);
+
+    public static readonly BindableProperty StatusUpdateCommandProperty =
     BindableProperty.Create(nameof(ICommand), typeof(ICommand), typeof(TaskView), null);
 
     public string Label
@@ -25,10 +28,10 @@ public partial class TaskView : ContentView
         set => SetValue(LabelProperty, value);
     }
 
-    public Model.TaskStatus IsComplete
+    public Model.TaskStatus TaskStatus
     {
-        get => (bool)GetValue(IsCompleteProperty) ? Model.TaskStatus.Done : Model.TaskStatus.Pending;
-        set => SetValue(IsCompleteProperty, value == Model.TaskStatus.Done);
+        get => (Model.TaskStatus)GetValue(TaskStatusProperty);
+        set => SetValue(TaskStatusProperty, value);
     }
 
     public ICommand RemoveCommand
@@ -37,4 +40,15 @@ public partial class TaskView : ContentView
         set => SetValue(RemoveCommandProperty, value);
     }
 
+    public ICommand StatusUpdateCommand
+    {
+        get => (ICommand)GetValue(StatusUpdateCommandProperty);
+        set => SetValue(StatusUpdateCommandProperty, value);
+    }
+
+    private void StatusBoxChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (StatusUpdateCommand != null && StatusUpdateCommand.CanExecute(BindingContext as TaskModel))
+            StatusUpdateCommand.Execute(BindingContext as TaskModel);
+    }
 }
